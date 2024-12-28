@@ -10,7 +10,7 @@ const RightNav = ({ email }: { email: string }) => {
     return (
       <nav className="flex items-center gap-4">
         <Link
-          href={"/pricing"}
+          href={"/dashboard"}
           className="bg-blue-600 text-white py-2 px-4 rounded-full"
         >
           Dashboard
