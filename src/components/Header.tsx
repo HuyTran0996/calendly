@@ -1,7 +1,12 @@
+"use server";
+import { session } from "@/libs/session";
 import { CalendarDays } from "lucide-react";
 import Link from "next/link";
+import RightNav from "./RightNav";
 
-const Header = () => {
+const Header = async () => {
+  const email = await session().get("email");
+
   return (
     <header className="flex gap-4 justify-between py-6 text-gray-600">
       <div className="flex items-center gap-10">
@@ -18,16 +23,7 @@ const Header = () => {
           <Link href={"/pricing"}>Pricing</Link>
         </nav>
       </div>
-
-      <nav className="flex items-center gap-4">
-        <Link href={"/about"}>Sign in</Link>
-        <Link
-          href={"/pricing"}
-          className="bg-blue-600 text-white py-2 px-4 rounded-full"
-        >
-          Get started
-        </Link>
-      </nav>
+      <RightNav email={email} />
     </header>
   );
 };
