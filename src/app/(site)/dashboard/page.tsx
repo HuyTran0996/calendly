@@ -1,6 +1,4 @@
 import DashboardNav from "@/components/DashboardNav";
-import Link from "next/link";
-import React from "react";
 
 const DashboardPage = () => {
   return (
