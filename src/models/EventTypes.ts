@@ -1,22 +1,22 @@
-import { model, models, Schema } from "mongoose";
+import mongoose, { Model, model, models, Schema } from "mongoose";
+import { BookingTimes, FromTo, WeekdayName } from "@/libs/types";
 
 const FromToSchema = new Schema({
   from: String,
   to: String,
+  active: Boolean,
 });
 
-type FromTo = {
-  from: string;
-  to: string;
-};
-type WeekdayName =
-  | "monday"
-  | "tuesday"
-  | "wednesday"
-  | "thursday"
-  | "friday"
-  | "saturday"
-  | "sunday";
+export interface IEventType extends mongoose.Document {
+  email: string;
+  uri: string;
+  title: string;
+  description: string;
+  length: number;
+  bookingTimes: BookingTimes;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 const BookingSchema = new Schema<Record<WeekdayName, FromTo>>({
   monday: FromToSchema,
@@ -28,17 +28,10 @@ const BookingSchema = new Schema<Record<WeekdayName, FromTo>>({
   sunday: FromToSchema,
 });
 
-type EventType = {
-  email: string;
-  title: string;
-  description: string;
-  length: number;
-  bookingTimes: Record<WeekdayName, FromTo>;
-};
-
-const EventTypesSchema = new Schema<EventType>(
+const EventTypesSchema = new Schema<IEventType>(
   {
     email: String,
+    uri: String,
     title: String,
     description: String,
     length: Number,
@@ -48,4 +41,5 @@ const EventTypesSchema = new Schema<EventType>(
 );
 
 export const EventTypeModel =
-  models?.EventType || model<EventType>("EventType", EventTypesSchema);
+  (models?.EventType as Model<IEventType>) ||
+  model<IEventType>("EventType", EventTypesSchema);
