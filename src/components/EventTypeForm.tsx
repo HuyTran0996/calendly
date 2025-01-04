@@ -8,7 +8,6 @@ import clsx from "clsx";
 import TimeSelect from "./TimeSelect";
 import { BookingTimes, WeekdayName } from "@/libs/types";
 import { IEventType } from "@/models/EventTypes";
-import { Trash } from "lucide-react";
 import EventTypeDelete from "./EventTypeDelete";
 
 const weekdaysNames: WeekdayName[] = [
@@ -21,7 +20,13 @@ const weekdaysNames: WeekdayName[] = [
   "sunday",
 ];
 
-const EventTypeForm = ({ doc }: { doc?: IEventType }) => {
+const EventTypeForm = ({
+  doc,
+  username = "",
+}: {
+  doc?: IEventType;
+  username?: string;
+}) => {
   const [title, setTitle] = useState(doc?.title || "");
   const [description, setDescription] = useState(doc?.description || "");
   const [length, setLength] = useState(doc?.length || 30);
@@ -60,10 +65,10 @@ const EventTypeForm = ({ doc }: { doc?: IEventType }) => {
     });
   };
   return (
-    <form className="p-2 bg-gray-200 rounded-lg" onSubmit={handleSubmit}>
+    <form className="mt-4 p-2 bg-gray-200 rounded-lg" onSubmit={handleSubmit}>
       {doc && (
-        <p className="my-2 text-sm">
-          URL:http://localhost:3000/username/{doc.uri}
+        <p className="my-2 text-sm text-gray-500">
+          {process.env.NEXT_PUBLIC_URL}/{username}/{doc.uri}
         </p>
       )}
       <div className="grid grid-cols-2 gap-4">

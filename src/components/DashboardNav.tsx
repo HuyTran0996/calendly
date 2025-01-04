@@ -4,30 +4,45 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const DashboardNav = () => {
+const DashboardNav = ({ username }: { username?: string }) => {
   const pathname = usePathname();
   const isEventTypesPage = pathname.includes("event-types");
+  const isBookedEventsPage = pathname.includes("booked-events");
 
   return (
     <div className="flex gap-4 justify-center">
       <Link
         className={clsx(
           "rounded-full px-4 py-2",
-          isEventTypesPage ? "bg-gray-200" : "bg-blue-600 text-white"
+          pathname === "/dashboard" ? "bg-blue-600 text-white" : "bg-gray-200"
         )}
         href={"/dashboard"}
       >
-        Booked events
+        Profile
       </Link>
-      <Link
-        className={clsx(
-          "rounded-full px-4 py-2",
-          isEventTypesPage ? "bg-blue-600 text-white" : "bg-gray-200"
-        )}
-        href={"/dashboard/event-types"}
-      >
-        Event types
-      </Link>
+      {username && (
+        <>
+          <Link
+            className={clsx(
+              "rounded-full px-4 py-2",
+              isBookedEventsPage ? "bg-blue-600 text-white" : "bg-gray-200"
+            )}
+            href={"/dashboard/booked-events"}
+          >
+            Booked events
+          </Link>
+
+          <Link
+            className={clsx(
+              "rounded-full px-4 py-2",
+              isEventTypesPage ? "bg-blue-600 text-white" : "bg-gray-200"
+            )}
+            href={"/dashboard/event-types"}
+          >
+            Event types
+          </Link>
+        </>
+      )}
     </div>
   );
 };
